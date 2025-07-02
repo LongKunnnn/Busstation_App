@@ -1082,89 +1082,6 @@ def create_assignment_management_tab(notebook_parent):
     view_assignments()
     return assignment_frame
 
-# --- Daily Attendance Check Tab Content ---
-def create_daily_attendance_check_tab(notebook_parent):
-    attendance_frame = ttk.Frame(notebook_parent)
-
-    # Input for date
-    date_frame = ttk.LabelFrame(attendance_frame, text="Select Date")
-    date_frame.pack(padx=10, pady=10, fill="x")
-
-    date_label = ttk.Label(date_frame, text="Date (YYYY-MM-DD):")
-    date_label.pack(side="left", padx=5, pady=2)
-    date_entry = ttk.Entry(date_frame)
-    date_entry.pack(side="left", padx=5, pady=2, expand=True, fill="x")
-    date_entry.insert(0, datetime.now().strftime('%Y-%m-%d')) # Default to current date
-
-    # Treeview for displaying attendance
-    columns = ("AssignmentID", "DriverID", "Driver Full Name", "BusID", "RouteID", "Assignment Date", "Departure Time", "Arrival Time")
-    column_widths = [90, 70, 150, 60, 60, 120, 100, 100]
-    tree = setup_treeview(attendance_frame, columns, column_widths)
-
-    def view_attendance():
-        for item in tree.get_children():
-            tree.delete(item)
-        selected_date_str = date_entry.get()
-        
-        # --- DÒ TÌM LỖI: In ra chuỗi ngày được đọc từ giao diện ---
-        print(f"DEBUG: Date string from GUI entry: '{selected_date_str}'")
-        # --- HẾT DÒ TÌM LỖI ---
-
-        try:
-            selected_date = datetime.strptime(selected_date_str, '%Y-%m-%d').date()
-            # --- DÒ TÌM LỖI: In ra đối tượng ngày sau khi parse ---
-            print(f"DEBUG: Parsed date object: {selected_date} (type: {type(selected_date)})")
-            # --- HẾT DÒ TÌM LỖI ---
-        except ValueError:
-            messagebox.showwarning("Input Error", "Please enter a valid date in YYYY-MM-DD format.")
-            return
-
-        conn = create_db_connection()
-        if conn:
-            cursor = conn.cursor()
-            try:
-                # Updated SQL to join with driver table for FullName and select more assignment details
-                sql = """
-                SELECT
-                    a.AssignmentID,
-                    a.DriverID,
-                    d.FullName AS DriverFullName,
-                    a.BusID,
-                    a.RouteID,
-                    a.AssignmentDate,
-                    a.DepartureTime,
-                    a.ArrivalTime
-                FROM
-                    assignment a
-                JOIN
-                    driver d ON a.DriverID = d.DriverID
-                WHERE
-                    a.AssignmentDate = %s
-                ORDER BY
-                    a.DepartureTime, a.DriverID
-                """
-                # --- DÒ TÌM LỖI: In ra tham số ngày được gửi đến SQL ---
-                print(f"DEBUG: SQL query parameter for attendance: {selected_date}")
-                # --- HẾT DÒ TÌM LỖI ---
-                cursor.execute(sql, (selected_date,))
-                rows = cursor.fetchall()
-                if not rows:
-                    messagebox.showinfo("No Assignments", f"No assignments found for {selected_date_str}.")
-                for row in rows:
-                    tree.insert("", "end", values=row)
-            except mysql.connector.Error as e:
-                messagebox.showerror("Error", f"Failed to retrieve attendance: {e}")
-            finally:
-                cursor.close()
-                conn.close()
-
-    # Button to view attendance
-    button_frame = ttk.Frame(attendance_frame)
-    button_frame.pack(padx=10, pady=5, fill="x")
-    ttk.Button(button_frame, text="View Attendance", command=view_attendance).pack(pady=5)
-    
-    view_attendance() # Load attendance for the default date on opening
-    return attendance_frame
 
 # --- Main Application Window ---
 def main_app():
@@ -1195,8 +1112,6 @@ def main_app():
     assignment_tab = create_assignment_management_tab(notebook)
     notebook.add(assignment_tab, text="Manage Assignments")
 
-    daily_attendance_tab = create_daily_attendance_check_tab(notebook)
-    notebook.add(daily_attendance_tab, text="Daily Attendance Check")
 
     root.mainloop()
 
