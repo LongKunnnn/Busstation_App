@@ -5,7 +5,7 @@ services:
     image: mysql:8.0
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: your_strong_password # <<< RẤT QUAN TRỌNG: THAY BẰNG MẬT KHẨU MẠNH CỦA BẠN
+      MYSQL_ROOT_PASSWORD: 123zzz # <<< RẤT QUAN TRỌNG: THAY BẰNG MẬT KHẨU MẠNH CỦA BẠN
       MYSQL_DATABASE: busstationmanagement
     # ports:
       # - "3306:3306"
@@ -26,16 +26,12 @@ services:
     environment:
       DB_HOST: db
       DB_USER: root
-      DB_PASSWORD: your_strong_password # <<< SỬ DỤNG CÙNG MẬT KHẨU VỚI MYSQL_ROOT_PASSWORD
+      DB_PASSWORD: 123zzz # <<< SỬ DỤNG CÙNG MẬT KHẨU VỚI MYSQL_ROOT_PASSWORD
       DB_NAME: busstationmanagement
       DISPLAY: host.docker.internal:0.0 # Cấu hình DISPLAY cho Windows
     depends_on:
       db:
         condition: service_healthy
-    # Bạn không cần phần volumes này nữa, vì nó không cần thiết cho Tkinter trên Windows khi dùng host.docker.internal
-    # volumes:
-    #   - /tmp/.X11-unix:/tmp/.X11-unix # Xóa hoặc comment dòng này đi
-    # privileged: true # Tránh sử dụng trừ khi thực sự cần và hiểu rủi ro
-
+   
 volumes:
   mysql_data:
