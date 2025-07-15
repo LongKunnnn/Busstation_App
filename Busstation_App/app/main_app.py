@@ -50,42 +50,42 @@ def create_driver_management_tab(notebook):
     input_frame = ttk.LabelFrame(driver_frame, text="Driver Information")
     input_frame.pack(padx=10, pady=10, fill="x")
 
-    ttk.Label(input_frame, text="Driver Name:").grid(row=0, column=0, padx=5, pady=5, sticky="w")
-    driver_name_entry = ttk.Entry(input_frame, width=30)
-    driver_name_entry.grid(row=0, column=1, padx=5, pady=5, sticky="ew")
+    ttk.Label(input_frame, text="Full Name:").grid(row=0, column=0, padx=5, pady=5, sticky="w")
+    fullname_entry = ttk.Entry(input_frame, width=30)
+    fullname_entry.grid(row=0, column=1, padx=5, pady=5, sticky="ew")
 
-    ttk.Label(input_frame, text="License Number:").grid(row=1, column=0, padx=5, pady=5, sticky="w")
-    license_number_entry = ttk.Entry(input_frame, width=30)
-    license_number_entry.grid(row=1, column=1, padx=5, pady=5, sticky="ew")
+    ttk.Label(input_frame, text="Gender:").grid(row=1, column=0, padx=5, pady=5, sticky="w")
+    gender_entry = ttk.Entry(input_frame, width=30)
+    gender_entry.grid(row=1, column=1, padx=5, pady=5, sticky="ew")
 
-    ttk.Label(input_frame, text="Contact Info:").grid(row=2, column=0, padx=5, pady=5, sticky="w")
-    contact_info_entry = ttk.Entry(input_frame, width=30)
-    contact_info_entry.grid(row=2, column=1, padx=5, pady=5, sticky="ew")
+    ttk.Label(input_frame, text="Birth Date:").grid(row=2, column=0, padx=5, pady=5, sticky="w")
+    birthdate_entry = ttk.Entry(input_frame, width=30)
+    birthdate_entry.grid(row=2, column=1, padx=5, pady=5, sticky="ew")
 
     # Treeview for displaying drivers
-    driver_tree = setup_treeview(driver_frame, ["DriverID", "DriverName", "LicenseNumber", "ContactInfo"],
+    driver_tree = setup_treeview(driver_frame, ["DriverID", "FullName", "Gender", "BirthDate"],
                                  widths=[70, 150, 120, 200])
 
     def clear_driver_entries():
-        driver_name_entry.delete(0, tk.END)
-        license_number_entry.delete(0, tk.END)
-        contact_info_entry.delete(0, tk.END)
+        fullname_entry.delete(0, tk.END)
+        gender_entry.delete(0, tk.END)
+        birthdate_entry.delete(0, tk.END)
 
     def add_driver():
-        driver_name = driver_name_entry.get()
-        license_number = license_number_entry.get()
-        contact_info = contact_info_entry.get()
+        fullname = fullname_entry.get()
+        gender = gender_entry.get()
+        birthdate = birthdate_entry.get()
 
-        if not all([driver_name, license_number]):
-            messagebox.showerror("Error", "Driver Name and License Number are required.")
+        if not all([fullname, gender]):
+            messagebox.showerror("Error", "Full Name and Gender are required.")
             return
 
         conn = create_db_connection()
         if conn:
             try:
                 cursor = conn.cursor()
-                sql = "INSERT INTO driver (DriverName, LicenseNumber, ContactInfo) VALUES (%s, %s, %s)"
-                cursor.execute(sql, (driver_name, license_number, contact_info))
+                sql = "INSERT INTO driver (FullName, Gender, BirthDate) VALUES (%s, %s, %s)"
+                cursor.execute(sql, (fullname, gender, birthdate))
                 conn.commit()
                 messagebox.showinfo("Success", "Driver added successfully.")
                 view_drivers()
@@ -103,20 +103,20 @@ def create_driver_management_tab(notebook):
             return
 
         driver_id = driver_tree.item(selected_item)['values'][0]
-        driver_name = driver_name_entry.get()
-        license_number = license_number_entry.get()
-        contact_info = contact_info_entry.get()
+        fullname = fullname_entry.get()
+        gender = gender_entry.get()
+        birthdate = birthdate_entry.get()
 
-        if not all([driver_name, license_number]):
-            messagebox.showerror("Error", "Driver Name and License Number are required.")
+        if not all([fullname, gender]):
+            messagebox.showerror("Error", "Full Name and Gender are required.")
             return
 
         conn = create_db_connection()
         if conn:
             try:
                 cursor = conn.cursor()
-                sql = "UPDATE driver SET DriverName = %s, LicenseNumber = %s, ContactInfo = %s WHERE DriverID = %s"
-                cursor.execute(sql, (driver_name, license_number, contact_info, driver_id))
+                sql = "UPDATE driver SET FullName = %s, Gender = %s, BirthDate = %s WHERE DriverID = %s"
+                cursor.execute(sql, (fullname, gender, birthdate, driver_id))
                 conn.commit()
                 messagebox.showinfo("Success", "Driver updated successfully.")
                 view_drivers()
@@ -172,9 +172,9 @@ def create_driver_management_tab(notebook):
         if selected_item:
             values = driver_tree.item(selected_item)['values']
             clear_driver_entries()
-            driver_name_entry.insert(0, values[1])
-            license_number_entry.insert(0, values[2])
-            contact_info_entry.insert(0, values[3])
+            fullname_entry.insert(0, values[1])
+            gender_entry.insert(0, values[2])
+            birthdate_entry.insert(0, values[3])
 
     driver_tree.bind("<<TreeviewSelect>>", on_driver_select)
 
@@ -197,34 +197,34 @@ def create_bus_management_tab(notebook):
     input_frame = ttk.LabelFrame(bus_frame, text="Bus Information")
     input_frame.pack(padx=10, pady=10, fill="x")
 
-    ttk.Label(input_frame, text="License Plate:").grid(row=0, column=0, padx=5, pady=5, sticky="w")
-    license_plate_entry = ttk.Entry(input_frame, width=30)
-    license_plate_entry.grid(row=0, column=1, padx=5, pady=5, sticky="ew")
+    ttk.Label(input_frame, text="Plate Number:").grid(row=0, column=0, padx=5, pady=5, sticky="w")
+    plate_number_entry = ttk.Entry(input_frame, width=30)
+    plate_number_entry.grid(row=0, column=1, padx=5, pady=5, sticky="ew")
 
     ttk.Label(input_frame, text="Capacity:").grid(row=1, column=0, padx=5, pady=5, sticky="w")
     capacity_entry = ttk.Entry(input_frame, width=30)
     capacity_entry.grid(row=1, column=1, padx=5, pady=5, sticky="ew")
 
-    ttk.Label(input_frame, text="Model:").grid(row=2, column=0, padx=5, pady=5, sticky="w")
-    model_entry = ttk.Entry(input_frame, width=30)
-    model_entry.grid(row=2, column=1, padx=5, pady=5, sticky="ew")
+    ttk.Label(input_frame, text="BusType:").grid(row=2, column=0, padx=5, pady=5, sticky="w")
+    bus_type_entry = ttk.Entry(input_frame, width=30)
+    bus_type_entry.grid(row=2, column=1, padx=5, pady=5, sticky="ew")
 
     # Treeview for displaying buses
-    bus_tree = setup_treeview(bus_frame, ["BusID", "LicensePlate", "Capacity", "Model"],
+    bus_tree = setup_treeview(bus_frame, ["BusID", "PlateNumber", "Capacity", "BusType"],
                               widths=[70, 120, 80, 150])
 
     def clear_bus_entries():
-        license_plate_entry.delete(0, tk.END)
+        plate_number_entry.delete(0, tk.END)
         capacity_entry.delete(0, tk.END)
-        model_entry.delete(0, tk.END)
+        bus_type_entry.delete(0, tk.END)
 
     def add_bus():
-        license_plate = license_plate_entry.get()
+        plate_number = plate_number_entry.get()
         capacity = capacity_entry.get()
-        model = model_entry.get()
+        bus_type = bus_type_entry.get()
 
-        if not all([license_plate, capacity]):
-            messagebox.showerror("Error", "License Plate and Capacity are required.")
+        if not all([plate_number, capacity]):
+            messagebox.showerror("Error", "Plate Number and Capacity are required.")
             return
         try:
             capacity = int(capacity)
@@ -236,8 +236,8 @@ def create_bus_management_tab(notebook):
         if conn:
             try:
                 cursor = conn.cursor()
-                sql = "INSERT INTO bus (LicensePlate, Capacity, Model) VALUES (%s, %s, %s)"
-                cursor.execute(sql, (license_plate, capacity, model))
+                sql = "INSERT INTO bus (PlateNumber, Capacity, BusType) VALUES (%s, %s, %s)"
+                cursor.execute(sql, (plate_number, capacity, bus_type))
                 conn.commit()
                 messagebox.showinfo("Success", "Bus added successfully.")
                 view_buses()
@@ -255,12 +255,12 @@ def create_bus_management_tab(notebook):
             return
 
         bus_id = bus_tree.item(selected_item)['values'][0]
-        license_plate = license_plate_entry.get()
+        plate_number = plate_number_entry.get()
         capacity = capacity_entry.get()
-        model = model_entry.get()
+        bus_type = bus_type_entry.get()
 
-        if not all([license_plate, capacity]):
-            messagebox.showerror("Error", "License Plate and Capacity are required.")
+        if not all([plate_number, capacity]):
+            messagebox.showerror("Error", "Plate Number and Capacity are required.")
             return
         try:
             capacity = int(capacity)
@@ -272,8 +272,8 @@ def create_bus_management_tab(notebook):
         if conn:
             try:
                 cursor = conn.cursor()
-                sql = "UPDATE bus SET LicensePlate = %s, Capacity = %s, Model = %s WHERE BusID = %s"
-                cursor.execute(sql, (license_plate, capacity, model, bus_id))
+                sql = "UPDATE bus SET PlateNumber = %s, Capacity = %s, BusType = %s WHERE BusID = %s"
+                cursor.execute(sql, (plate_number, capacity, bus_type, bus_id))
                 conn.commit()
                 messagebox.showinfo("Success", "Bus updated successfully.")
                 view_buses()
@@ -329,9 +329,9 @@ def create_bus_management_tab(notebook):
         if selected_item:
             values = bus_tree.item(selected_item)['values']
             clear_bus_entries()
-            license_plate_entry.insert(0, values[1])
+            plate_number_entry.insert(0, values[1])
             capacity_entry.insert(0, values[2])
-            model_entry.insert(0, values[3])
+            bus_type_entry.insert(0, values[3])
 
     bus_tree.bind("<<TreeviewSelect>>", on_bus_select)
 
@@ -494,38 +494,38 @@ def create_route_management_tab(notebook):
     input_frame.pack(padx=10, pady=10, fill="x")
 
     ttk.Label(input_frame, text="Route Number:").grid(row=0, column=0, padx=5, pady=5, sticky="w")
-    route_number_entry = ttk.Entry(input_frame, width=30)
-    route_number_entry.grid(row=0, column=1, padx=5, pady=5, sticky="ew")
+    route_name_entry = ttk.Entry(input_frame, width=30)
+    route_name_entry.grid(row=0, column=1, padx=5, pady=5, sticky="ew")
 
-    ttk.Label(input_frame, text="Origin:").grid(row=1, column=0, padx=5, pady=5, sticky="w")
-    origin_entry = ttk.Entry(input_frame, width=30)
-    origin_entry.grid(row=1, column=1, padx=5, pady=5, sticky="ew")
+    ttk.Label(input_frame, text="StartPoint:").grid(row=1, column=0, padx=5, pady=5, sticky="w")
+    start_point_entry = ttk.Entry(input_frame, width=30)
+    start_point_entry.grid(row=1, column=1, padx=5, pady=5, sticky="ew")
 
-    ttk.Label(input_frame, text="Destination:").grid(row=2, column=0, padx=5, pady=5, sticky="w")
-    destination_entry = ttk.Entry(input_frame, width=30)
-    destination_entry.grid(row=2, column=1, padx=5, pady=5, sticky="ew")
+    ttk.Label(input_frame, text="EndPoint:").grid(row=2, column=0, padx=5, pady=5, sticky="w")
+    end_point_entry = ttk.Entry(input_frame, width=30)
+    end_point_entry.grid(row=2, column=1, padx=5, pady=5, sticky="ew")
 
     ttk.Label(input_frame, text="Distance (km):").grid(row=3, column=0, padx=5, pady=5, sticky="w")
     distance_entry = ttk.Entry(input_frame, width=30)
     distance_entry.grid(row=3, column=1, padx=5, pady=5, sticky="ew")
 
     # Treeview for displaying routes
-    route_tree = setup_treeview(route_frame, ["RouteID", "RouteNumber", "Origin", "Destination", "Distance"],
+    route_tree = setup_treeview(route_frame, ["RouteID", "RouteName", "StartPoint", "EndPoint", "Distance"],
                                 widths=[70, 100, 150, 150, 100])
 
     def clear_route_entries():
-        route_number_entry.delete(0, tk.END)
-        origin_entry.delete(0, tk.END)
-        destination_entry.delete(0, tk.END)
+        route_name_entry.delete(0, tk.END)
+        start_point_entry.delete(0, tk.END)
+        end_point_entry.delete(0, tk.END)
         distance_entry.delete(0, tk.END)
 
     def add_route():
-        route_number = route_number_entry.get()
-        origin = origin_entry.get()
-        destination = destination_entry.get()
+        route_name = route_name_entry.get()
+        start_point = start_point_entry.get()
+        end_point = end_point_entry.get()
         distance = distance_entry.get()
 
-        if not all([route_number, origin, destination, distance]):
+        if not all([route_name, start_point, end_point, distance]):
             messagebox.showerror("Error", "All fields are required.")
             return
         try:
@@ -538,8 +538,8 @@ def create_route_management_tab(notebook):
         if conn:
             try:
                 cursor = conn.cursor()
-                sql = "INSERT INTO route (RouteNumber, Origin, Destination, Distance) VALUES (%s, %s, %s, %s)"
-                cursor.execute(sql, (route_number, origin, destination, distance))
+                sql = "INSERT INTO route (RouteName, StartPoint, EndPoint, Distance) VALUES (%s, %s, %s, %s)"
+                cursor.execute(sql, (route_name, start_point, end_point, distance))
                 conn.commit()
                 messagebox.showinfo("Success", "Route added successfully.")
                 view_routes()
@@ -557,12 +557,12 @@ def create_route_management_tab(notebook):
             return
 
         route_id = route_tree.item(selected_item)['values'][0]
-        route_number = route_number_entry.get()
-        origin = origin_entry.get()
-        destination = destination_entry.get()
+        route_name = route_name_entry.get()
+        start_point = start_point_entry.get()
+        end_point = end_point_entry.get()
         distance = distance_entry.get()
 
-        if not all([route_number, origin, destination, distance]):
+        if not all([route_name, start_point, end_point, distance]):
             messagebox.showerror("Error", "All fields are required.")
             return
         try:
@@ -575,8 +575,8 @@ def create_route_management_tab(notebook):
         if conn:
             try:
                 cursor = conn.cursor()
-                sql = "UPDATE route SET RouteNumber = %s, Origin = %s, Destination = %s, Distance = %s WHERE RouteID = %s"
-                cursor.execute(sql, (route_number, origin, destination, distance, route_id))
+                sql = "UPDATE route SET RouteName = %s, StartPoint = %s, EndPoint = %s, Distance = %s WHERE RouteID = %s"
+                cursor.execute(sql, (route_name, start_point, end_point, distance, route_id))
                 conn.commit()
                 messagebox.showinfo("Success", "Route updated successfully.")
                 view_routes()
@@ -632,9 +632,9 @@ def create_route_management_tab(notebook):
         if selected_item:
             values = route_tree.item(selected_item)['values']
             clear_route_entries()
-            route_number_entry.insert(0, values[1])
-            origin_entry.insert(0, values[2])
-            destination_entry.insert(0, values[3])
+            route_name_entry.insert(0, values[1])
+            start_point_entry.insert(0, values[2])
+            end_point_entry.insert(0, values[3])
             distance_entry.insert(0, values[4])
 
     route_tree.bind("<<TreeviewSelect>>", on_route_select)

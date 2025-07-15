@@ -25,10 +25,10 @@ DROP TABLE IF EXISTS `assignment`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `assignment` (
-  `AssignmentID` varchar(10) NOT NULL,
-  `BusID` varchar(10) DEFAULT NULL,
-  `DriverID` varchar(10) DEFAULT NULL,
-  `RouteID` varchar(10) DEFAULT NULL,
+  `AssignmentID` INT AUTO_INCREMENT NOT NULL,
+  `BusID` INT DEFAULT NULL,
+  `DriverID` INT DEFAULT NULL,
+  `RouteID` INT DEFAULT NULL,
   `AssignmentDate` date NOT NULL,
   PRIMARY KEY (`AssignmentID`),
   KEY `BusID` (`BusID`),
@@ -46,7 +46,7 @@ CREATE TABLE `assignment` (
 
 LOCK TABLES `assignment` WRITE;
 /*!40000 ALTER TABLE `assignment` DISABLE KEYS */;
-INSERT INTO `assignment` VALUES ('A001','B001','D001','R001','2024-01-01'),('A002','B002','D002','R002','2024-01-04'),('A003','B003','D003','R003','2024-01-07'),('A004','B004','D004','R004','2024-01-10'),('A005','B005','D005','R005','2024-02-01'),('A006','B006','D006','R006','2024-02-05'),('A007','B007','D007','R007','2024-02-09'),('A008','B008','D008','R008','2024-03-03'),('A009','B009','D009','R009','2024-03-06'),('A010','B010','D010','R010','2024-04-06'),('A011','B011','D011','R011','2024-04-10'),('A012','B012','D012','R012','2025-01-11'),('A013','B013','D013','R013','2025-01-15'),('A014','B014','D014','R014','2025-04-01'),('A015','B015','D015','R015','2025-08-15');
+INSERT INTO `assignment` VALUES (1,1,1,1,'2024-01-01'),(2,2,2,2,'2024-01-04'),(3,3,3,3,'2024-01-07'),(4,4,4,4,'2024-01-10'),(5,5,5,5,'2024-02-01'),(6,6,6,6,'2024-02-05'),(7,7,7,7,'2024-02-09'),(8,8,8,8,'2024-03-03'),(9,9,9,9,'2024-03-06'),(10,10,10,10,'2024-04-06'),(11,11,11,11,'2024-04-10'),(12,12,12,12,'2025-01-11'),(13,13,13,13,'2025-01-15'),(14,14,14,14,'2025-04-01'),(15,15,15,15,'2025-08-15');
 /*!40000 ALTER TABLE `assignment` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -85,9 +85,9 @@ DROP TABLE IF EXISTS `bus`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `bus` (
-  `BusID` varchar(10) NOT NULL,
+  `BusID` INT AUTO_INCREMENT NOT NULL,
   `PlateNumber` varchar(20) NOT NULL,
-  `Capacity` int DEFAULT NULL,
+  `Capacity` INT DEFAULT NULL,
   `BusType` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`BusID`),
   UNIQUE KEY `PlateNumber` (`PlateNumber`),
@@ -101,7 +101,7 @@ CREATE TABLE `bus` (
 
 LOCK TABLES `bus` WRITE;
 /*!40000 ALTER TABLE `bus` DISABLE KEYS */;
-INSERT INTO `bus` VALUES ('B001','29B-10001',40,'Standard'),('B002','29B-10002',40,'Standard'),('B003','29B-10003',40,'Standard'),('B004','29B-10004',40,'Standard'),('B005','29B-10005',40,'Standard'),('B006','29B-10006',50,'Big'),('B007','29B-10007',50,'Big'),('B008','29B-10008',50,'Big'),('B009','29B-10009',50,'Big'),('B010','29B-10010',50,'Big'),('B011','29B-10011',30,'Mini'),('B012','29B-10012',30,'Mini'),('B013','29B-10013',30,'Mini'),('B014','29B-10014',30,'Mini'),('B015','29B-10015',30,'Mini');
+INSERT INTO `bus` VALUES (1,'29B-10001',40,'Standard'),(2,'29B-10002',40,'Standard'),(3,'29B-10003',40,'Standard'),(4,'29B-10004',40,'Standard'),(5,'29B-10005',40,'Standard'),(6,'29B-10006',50,'Big'),(7,'29B-10007',50,'Big'),(8,'29B-10008',50,'Big'),(9,'29B-10009',50,'Big'),(10,'29B-10010',50,'Big'),(11,'29B-10011',30,'Mini'),(12,'29B-10012',30,'Mini'),(13,'29B-10013',30,'Mini'),(14,'29B-10014',30,'Mini'),(15,'29B-10015',30,'Mini');
 /*!40000 ALTER TABLE `bus` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -140,7 +140,7 @@ DROP TABLE IF EXISTS `busstop`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `busstop` (
-  `StopID` varchar(10) NOT NULL,
+  `StopID` INT AUTO_INCREMENT NOT NULL,
   `StopName` varchar(100) NOT NULL,
   `Location` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`StopID`)
@@ -153,7 +153,7 @@ CREATE TABLE `busstop` (
 
 LOCK TABLES `busstop` WRITE;
 /*!40000 ALTER TABLE `busstop` DISABLE KEYS */;
-INSERT INTO `busstop` VALUES ('S001','Trạm 1','Ngã 3 Trường Chinh'),('S002','Trạm 2','Ngã tư sở'),('S003','Trạm 3','Đại học Quốc Gia'),('S004','Trạm 4','Phạm Văn Đồng'),('S005','Trạm 5','Văn Miếu - Quốc Tử Giám'),('S006','Trạm 6','Nhà Hát Lớn'),('S007','Trạm 7','Lạc Long Quân'),('S008','Trạm 8','Đại lộ Thăng Long'),('S009','Trạm 9','Ngã tư Khuất Duy Tiến'),('S010','Trạm 10','Nguyễn Xiển - Thanh Xuân'),('S011','Trạm 11','Láng Hạ'),('S012','Trạm 12','Nhổn'),('S013','Trạm 13','Văn Quán'),('S014','Trạm 14','Long Biên'),('S015','Trạm 15','Aeon Mall Hà Đông');
+INSERT INTO `busstop` VALUES (1,'Trạm 1','Ngã 3 Trường Chinh'),(2,'Trạm 2','Ngã tư sở'),(3,'Trạm 3','Đại học Quốc Gia'),(4,'Trạm 4','Phạm Văn Đồng'),(5,'Trạm 5','Văn Miếu - Quốc Tử Giám'),(6,'Trạm 6','Nhà Hát Lớn'),(7,'Trạm 7','Lạc Long Quân'),(8,'Trạm 8','Đại lộ Thăng Long'),(9,'Trạm 9','Ngã tư Khuất Duy Tiến'),(10,'Trạm 10','Nguyễn Xiển - Thanh Xuân'),(11,'Trạm 11','Láng Hạ'),(12,'Trạm 12','Nhổn'),(13,'Trạm 13','Văn Quán'),(14,'Trạm 14','Long Biên'),(15,'Trạm 15','Aeon Mall Hà Đông');
 /*!40000 ALTER TABLE `busstop` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -192,7 +192,7 @@ DROP TABLE IF EXISTS `driver`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `driver` (
-  `DriverID` varchar(10) NOT NULL,
+  `DriverID` INT AUTO_INCREMENT NOT NULL,
   `FullName` varchar(100) NOT NULL,
   `Gender` enum('Nam','Nữ','Khác') DEFAULT NULL,
   `BirthDate` date DEFAULT NULL,
@@ -208,7 +208,7 @@ CREATE TABLE `driver` (
 
 LOCK TABLES `driver` WRITE;
 /*!40000 ALTER TABLE `driver` DISABLE KEYS */;
-INSERT INTO `driver` VALUES ('D001','Nguyễn Văn Dũng','Nam','1980-05-22','0922345671'),('D002','Nguyễn Bảo Nam','Nam','1982-01-20','0952345672'),('D003','Trần Đức Thịnh ','Nam','1988-05-23','0962345673'),('D004','Trịnh Kim Loan','Nữ','1999-05-20','0916345674'),('D005','Lê Văn Tuấn','Nam','1980-08-08','0915345675'),('D006','Vũ Văn Hòa','Nam','1992-05-13','0919345676'),('D007','Vũ Đức Hoàng','Nam','1991-07-09','0912345677'),('D008','Tô Thị Linh','Nữ','1991-01-11','0912345678'),('D009','Trần Quang Phương','Nam','1993-09-12','0912345679'),('D010','Vũ Trọng Nam','Nam','1982-05-01','0912345688'),('D011','Lê Kim Huyền','Nữ','1988-05-20','0912345898'),('D012','Lâm Xung','Nam','1999-11-12','0912345611'),('D013','Tống Giang','Nam','1997-12-26','0912345601'),('D014','Sơn Văn Tùng','Nam','1977-05-11','0913452378'),('D015','Triệu Vân','Nam','1979-04-10','0912345458');
+INSERT INTO `driver` VALUES (1,'Nguyễn Văn Dũng','Nam','1980-05-22','0922345671'),(2,'Nguyễn Bảo Nam','Nam','1982-01-20','0952345672'),(3,'Trần Đức Thịnh ','Nam','1988-05-23','0962345673'),(4,'Trịnh Kim Loan','Nữ','1999-05-20','0916345674'),(5,'Lê Văn Tuấn','Nam','1980-08-08','0915345675'),(6,'Vũ Văn Hòa','Nam','1992-05-13','0919345676'),(7,'Vũ Đức Hoàng','Nam','1991-07-09','0912345677'),(8,'Tô Thị Linh','Nữ','1991-01-11','0912345678'),(9,'Trần Quang Phương','Nam','1993-09-12','0912345679'),(10,'Vũ Trọng Nam','Nam','1982-05-01','0912345688'),(11,'Lê Kim Huyền','Nữ','1988-05-20','0912345898'),(12,'Lâm Xung','Nam','1999-11-12','0912345611'),(13,'Tống Giang','Nam','1997-12-26','0912345601'),(14,'Sơn Văn Tùng','Nam','1977-05-11','0913452378'),(15,'Triệu Vân','Nam','1979-04-10','0912345458');
 /*!40000 ALTER TABLE `driver` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -247,7 +247,7 @@ DROP TABLE IF EXISTS `route`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `route` (
-  `RouteID` varchar(10) NOT NULL,
+  `RouteID` INT AUTO_INCREMENT NOT NULL,
   `RouteName` varchar(100) NOT NULL,
   `StartPoint` varchar(100) NOT NULL,
   `EndPoint` varchar(100) NOT NULL,
@@ -263,7 +263,7 @@ CREATE TABLE `route` (
 
 LOCK TABLES `route` WRITE;
 /*!40000 ALTER TABLE `route` DISABLE KEYS */;
-INSERT INTO `route` VALUES ('R001','Tuyến 1','Bến xe A','Bến xe B',15.50),('R002','Tuyến 1','Bến xe A','Bến xe B',16.50),('R003','Tuyến 1','Bến xe A','Bến xe B',17.50),('R004','Tuyến 1','Bến xe A','Bến xe B',18.50),('R005','Tuyến 1','Bến xe A','Bến xe B',19.50),('R006','Tuyến 2','Bến xe B','Bến xe A',15.50),('R007','Tuyến 2','Bến xe B','Bến xe A',15.40),('R008','Tuyến 2','Bến xe B','Bến xe A',15.30),('R009','Tuyến 2','Bến xe B','Bến xe A',17.50),('R010','Tuyến 1','Bến xe A','Bến xe B',11.50),('R011','Tuyến 1','Bến xe A','Bến xe B',14.50),('R012','Tuyến 1','Bến xe A','Bến xe B',15.50),('R013','Tuyến 2','Bến xe B','Bến xe A',15.40),('R014','Tuyến 2','Bến xe B','Bến xe A',15.30),('R015','Tuyến 1','Bến xe A','Bến xe B',15.50);
+INSERT INTO `route` VALUES (1,'Tuyến 1','Bến xe A','Bến xe B',15.50),(2,'Tuyến 1','Bến xe A','Bến xe B',16.50),(3,'Tuyến 1','Bến xe A','Bến xe B',17.50),(4,'Tuyến 1','Bến xe A','Bến xe B',18.50),(5,'Tuyến 1','Bến xe A','Bến xe B',19.50),(6,'Tuyến 2','Bến xe B','Bến xe A',15.50),(7,'Tuyến 2','Bến xe B','Bến xe A',15.40),(8,'Tuyến 2','Bến xe B','Bến xe A',15.30),(9,'Tuyến 2','Bến xe B','Bến xe A',17.50),(10,'Tuyến 1','Bến xe A','Bến xe B',11.50),(11,'Tuyến 1','Bến xe A','Bến xe B',14.50),(12,'Tuyến 1','Bến xe A','Bến xe B',15.50),(13,'Tuyến 2','Bến xe B','Bến xe A',15.40),(14,'Tuyến 2','Bến xe B','Bến xe A',15.30),(15,'Tuyến 1','Bến xe A','Bến xe B',15.50);
 /*!40000 ALTER TABLE `route` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -302,9 +302,9 @@ DROP TABLE IF EXISTS `route_stop`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `route_stop` (
-  `RouteID` varchar(10) NOT NULL,
-  `StopID` varchar(10) DEFAULT NULL,
-  `StopOrder` int NOT NULL,
+  `RouteID` INT NOT NULL,
+  `StopID` INT DEFAULT NULL,
+  `StopOrder` INT NOT NULL,
   PRIMARY KEY (`RouteID`,`StopOrder`),
   KEY `StopID` (`StopID`),
   CONSTRAINT `route_stop_ibfk_1` FOREIGN KEY (`RouteID`) REFERENCES `route` (`RouteID`),
@@ -318,7 +318,7 @@ CREATE TABLE `route_stop` (
 
 LOCK TABLES `route_stop` WRITE;
 /*!40000 ALTER TABLE `route_stop` DISABLE KEYS */;
-INSERT INTO `route_stop` VALUES ('R001','S001',1),('R005','S001',1),('R008','S001',1),('R013','S001',1),('R001','S002',2),('R006','S002',1),('R009','S002',3),('R015','S002',1),('R001','S003',3),('R005','S003',2),('R007','S003',1),('R011','S003',1),('R001','S004',4),('R006','S004',2),('R010','S004',1),('R013','S004',2),('R002','S005',1),('R005','S005',3),('R007','S005',2),('R009','S005',4),('R012','S005',1),('R015','S005',2),('R002','S006',2),('R008','S006',2),('R010','S006',2),('R014','S006',1),('R002','S007',3),('R005','S007',4),('R006','S007',3),('R011','S007',2),('R002','S008',4),('R007','S008',3),('R010','S008',4),('R013','S008',3),('R003','S009',1),('R006','S009',4),('R011','S009',3),('R014','S009',2),('R007','S010',4),('R012','S010',2),('R014','S010',4),('R003','S011',2),('R004','S011',4),('R008','S011',3),('R011','S011',4),('R015','S011',3),('R003','S012',3),('R004','S012',2),('R008','S012',4),('R012','S012',3),('R009','S013',1),('R014','S013',3),('R004','S014',1),('R010','S014',3),('R012','S014',4),('R015','S014',4),('R003','S015',4),('R004','S015',3),('R009','S015',2),('R013','S015',4);
+INSERT INTO `route_stop` VALUES (1,1,1),(5,1,1),(8,1,1),(13,1,1),(1,2,2),(6,2,1),(9,2,3),(15,2,1),(1,3,3),(5,3,2),(7,3,1),(11,3,1),(1,4,4),(6,4,2),(10,4,1);
 /*!40000 ALTER TABLE `route_stop` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -357,8 +357,8 @@ DROP TABLE IF EXISTS `schedule`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `schedule` (
-  `ScheduleID` varchar(10) NOT NULL,
-  `RouteID` varchar(10) DEFAULT NULL,
+  `ScheduleID` INT AUTO_INCREMENT NOT NULL,
+  `RouteID` INT DEFAULT NULL,
   `DepartureTime` time NOT NULL,
   `ArrivalTime` time NOT NULL,
   `DayOfWeek` enum('Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday') DEFAULT NULL,
@@ -374,7 +374,7 @@ CREATE TABLE `schedule` (
 
 LOCK TABLES `schedule` WRITE;
 /*!40000 ALTER TABLE `schedule` DISABLE KEYS */;
-INSERT INTO `schedule` VALUES ('SCH001','R001','06:00:00','07:00:00','Monday'),('SCH002','R002','06:30:00','07:40:00','Tuesday'),('SCH003','R003','07:00:00','08:00:00','Wednesday'),('SCH004','R004','07:30:00','08:45:00','Thursday'),('SCH005','R005','08:00:00','09:10:00','Friday'),('SCH006','R006','08:30:00','09:30:00','Saturday'),('SCH007','R007','09:00:00','10:10:00','Sunday'),('SCH008','R008','09:30:00','10:30:00','Monday'),('SCH009','R009','10:00:00','11:00:00','Tuesday'),('SCH010','R010','10:30:00','11:45:00','Wednesday'),('SCH011','R011','11:00:00','12:00:00','Thursday'),('SCH012','R012','11:30:00','12:45:00','Friday'),('SCH013','R013','12:00:00','13:00:00','Saturday'),('SCH014','R014','12:30:00','13:30:00','Sunday'),('SCH015','R015','13:00:00','14:10:00','Monday');
+INSERT INTO `schedule` VALUES (1,1,'06:00:00','07:00:00','Monday'),(2,2,'06:30:00','07:40:00','Tuesday'),(3,3,'07:00:00','08:00:00','Wednesday'),(4,4,'07:30:00','08:45:00','Thursday'),(5,5,'08:00:00','09:10:00','Friday'),(6,6,'08:30:00','09:30:00','Saturday'),(7,7,'09:00:00','10:10:00','Sunday'),(8,8,'09:30:00','10:30:00','Monday'),(9,9,'10:00:00','11:00:00','Tuesday'),(10,10,'10:30:00','11:45:00','Wednesday'),(11,11,'11:00:00','12:00:00','Thursday'),(12,12,'11:30:00','12:45:00','Friday'),(13,13,'12:00:00','13:00:00','Saturday'),(14,14,'12:30:00','13:30:00','Sunday'),(15,15,'13:00:00','14:10:00','Monday');
 /*!40000 ALTER TABLE `schedule` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;

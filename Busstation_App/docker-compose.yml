@@ -5,10 +5,8 @@ services:
     image: mysql:8.0
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: 123zzz # <<< RẤT QUAN TRỌNG: THAY BẰNG MẬT KHẨU MẠNH CỦA BẠN
+      MYSQL_ROOT_PASSWORD: 123zzz 
       MYSQL_DATABASE: busstationmanagement
-    # ports:
-      # - "3306:3306"
     volumes:
       - mysql_data:/var/lib/mysql
       - ./mysql/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
@@ -22,13 +20,12 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.app
-    # Đây là khối environment duy nhất và đúng
     environment:
       DB_HOST: db
       DB_USER: root
-      DB_PASSWORD: 123zzz # <<< SỬ DỤNG CÙNG MẬT KHẨU VỚI MYSQL_ROOT_PASSWORD
+      DB_PASSWORD: 123zzz 
       DB_NAME: busstationmanagement
-      DISPLAY: host.docker.internal:0.0 # Cấu hình DISPLAY cho Windows
+      DISPLAY: host.docker.internal:0.0 
     depends_on:
       db:
         condition: service_healthy

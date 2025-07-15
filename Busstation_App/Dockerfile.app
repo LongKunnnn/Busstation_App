@@ -5,7 +5,6 @@ FROM python:3.9-slim-buster
 WORKDIR /app
 
 # Cài đặt các gói cần thiết cho GUI (Tkinter) và kết nối MySQL
-# Đã xóa 'libtcl-img' vì không tìm thấy gói này
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
     tk \
